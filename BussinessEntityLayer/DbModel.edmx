@@ -1,0 +1,468 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ProjectLicenseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ApplicationMst">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="ApplicationId" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LicenseNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="Driver_Id" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Creation_date" Type="datetime" />
+          <Property Name="Expiry_date" Type="datetime" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsRenew" Type="bit" />
+          <Property Name="Userid" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="DriverMst">
+          <Key>
+            <PropertyRef Name="Driver_id" />
+          </Key>
+          <Property Name="Driver_id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone_no" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="Province" Type="nvarchar" MaxLength="50" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LicenseType" Type="nvarchar" MaxLength="50" />
+          <Property Name="Document" Type="nvarchar" MaxLength="50" />
+          <Property Name="Document_image" Type="image" />
+          <Property Name="UserID" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="LicenseMst">
+          <Key>
+            <PropertyRef Name="License_id" />
+          </Key>
+          <Property Name="License_id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="License_number" Type="nvarchar" MaxLength="50" />
+          <Property Name="Driver_Id" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Creation_Date" Type="datetime" />
+          <Property Name="Expiry_date" Type="datetime" />
+          <Property Name="ApplicationId" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="UserMst">
+          <Key>
+            <PropertyRef Name="Userid" />
+          </Key>
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone_no" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Userid" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" />
+        </EntityType>
+        <Association Name="FK_ApplicationMst_DriverMst">
+          <End Role="DriverMst" Type="Self.DriverMst" Multiplicity="0..1" />
+          <End Role="ApplicationMst" Type="Self.ApplicationMst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DriverMst">
+              <PropertyRef Name="Driver_id" />
+            </Principal>
+            <Dependent Role="ApplicationMst">
+              <PropertyRef Name="Driver_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApplicationMst_UserMst">
+          <End Role="UserMst" Type="Self.UserMst" Multiplicity="0..1" />
+          <End Role="ApplicationMst" Type="Self.ApplicationMst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMst">
+              <PropertyRef Name="Userid" />
+            </Principal>
+            <Dependent Role="ApplicationMst">
+              <PropertyRef Name="Userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DriverMst_DriverMst">
+          <End Role="DriverMst" Type="Self.DriverMst" Multiplicity="1" />
+          <End Role="DriverMst1" Type="Self.DriverMst" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="DriverMst">
+              <PropertyRef Name="Driver_id" />
+            </Principal>
+            <Dependent Role="DriverMst1">
+              <PropertyRef Name="Driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DriverMst_UserMst">
+          <End Role="UserMst" Type="Self.UserMst" Multiplicity="0..1" />
+          <End Role="DriverMst" Type="Self.DriverMst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMst">
+              <PropertyRef Name="Userid" />
+            </Principal>
+            <Dependent Role="DriverMst">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LicenseMst_ApplicationMst">
+          <End Role="ApplicationMst" Type="Self.ApplicationMst" Multiplicity="0..1" />
+          <End Role="LicenseMst" Type="Self.LicenseMst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationMst">
+              <PropertyRef Name="ApplicationId" />
+            </Principal>
+            <Dependent Role="LicenseMst">
+              <PropertyRef Name="ApplicationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LicenseMst_DriverMst1">
+          <End Role="DriverMst" Type="Self.DriverMst" Multiplicity="0..1" />
+          <End Role="LicenseMst" Type="Self.LicenseMst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DriverMst">
+              <PropertyRef Name="Driver_id" />
+            </Principal>
+            <Dependent Role="LicenseMst">
+              <PropertyRef Name="Driver_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectLicenseModelStoreContainer">
+          <EntitySet Name="ApplicationMst" EntityType="Self.ApplicationMst" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DriverMst" EntityType="Self.DriverMst" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LicenseMst" EntityType="Self.LicenseMst" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserMst" EntityType="Self.UserMst" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ApplicationMst_DriverMst" Association="Self.FK_ApplicationMst_DriverMst">
+            <End Role="DriverMst" EntitySet="DriverMst" />
+            <End Role="ApplicationMst" EntitySet="ApplicationMst" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApplicationMst_UserMst" Association="Self.FK_ApplicationMst_UserMst">
+            <End Role="UserMst" EntitySet="UserMst" />
+            <End Role="ApplicationMst" EntitySet="ApplicationMst" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DriverMst_DriverMst" Association="Self.FK_DriverMst_DriverMst">
+            <End Role="DriverMst" EntitySet="DriverMst" />
+            <End Role="DriverMst1" EntitySet="DriverMst" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DriverMst_UserMst" Association="Self.FK_DriverMst_UserMst">
+            <End Role="UserMst" EntitySet="UserMst" />
+            <End Role="DriverMst" EntitySet="DriverMst" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LicenseMst_ApplicationMst" Association="Self.FK_LicenseMst_ApplicationMst">
+            <End Role="ApplicationMst" EntitySet="ApplicationMst" />
+            <End Role="LicenseMst" EntitySet="LicenseMst" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LicenseMst_DriverMst1" Association="Self.FK_LicenseMst_DriverMst1">
+            <End Role="DriverMst" EntitySet="DriverMst" />
+            <End Role="LicenseMst" EntitySet="LicenseMst" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProjectLicenseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ApplicationMst">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="ApplicationId" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LicenseNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Driver_Id" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Creation_date" Type="DateTime" Precision="3" />
+          <Property Name="Expiry_date" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Userid" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="DriverMst" Relationship="Self.FK_ApplicationMst_DriverMst" FromRole="ApplicationMst" ToRole="DriverMst" />
+          <NavigationProperty Name="UserMst" Relationship="Self.FK_ApplicationMst_UserMst" FromRole="ApplicationMst" ToRole="UserMst" />
+          <NavigationProperty Name="LicenseMsts" Relationship="Self.FK_LicenseMst_ApplicationMst" FromRole="ApplicationMst" ToRole="LicenseMst" />
+          <Property Name="IsRenew" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="DriverMst">
+          <Key>
+            <PropertyRef Name="Driver_id" />
+          </Key>
+          <Property Name="Driver_id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone_no" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LicenseType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="ApplicationMsts" Relationship="Self.FK_ApplicationMst_DriverMst" FromRole="DriverMst" ToRole="ApplicationMst" />
+          <NavigationProperty Name="DriverMst1" Relationship="Self.FK_DriverMst_DriverMst" FromRole="DriverMst" ToRole="DriverMst1" />
+          <NavigationProperty Name="DriverMst2" Relationship="Self.FK_DriverMst_DriverMst" FromRole="DriverMst1" ToRole="DriverMst" />
+          <NavigationProperty Name="UserMst" Relationship="Self.FK_DriverMst_UserMst" FromRole="DriverMst" ToRole="UserMst" />
+          <NavigationProperty Name="LicenseMsts" Relationship="Self.FK_LicenseMst_DriverMst1" FromRole="DriverMst" ToRole="LicenseMst" />
+          <Property Name="Document" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Document_image" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="LicenseMst">
+          <Key>
+            <PropertyRef Name="License_id" />
+          </Key>
+          <Property Name="License_id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="License_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Driver_Id" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Creation_Date" Type="DateTime" Precision="3" />
+          <Property Name="Expiry_date" Type="DateTime" Precision="3" />
+          <Property Name="ApplicationId" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="ApplicationMst" Relationship="Self.FK_LicenseMst_ApplicationMst" FromRole="LicenseMst" ToRole="ApplicationMst" />
+          <NavigationProperty Name="DriverMst" Relationship="Self.FK_LicenseMst_DriverMst1" FromRole="LicenseMst" ToRole="DriverMst" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="UserMst">
+          <Key>
+            <PropertyRef Name="Userid" />
+          </Key>
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone_no" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Userid" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsAdmin" Type="Boolean" />
+          <NavigationProperty Name="ApplicationMsts" Relationship="Self.FK_ApplicationMst_UserMst" FromRole="UserMst" ToRole="ApplicationMst" />
+          <NavigationProperty Name="DriverMsts" Relationship="Self.FK_DriverMst_UserMst" FromRole="UserMst" ToRole="DriverMst" />
+        </EntityType>
+        <Association Name="FK_ApplicationMst_DriverMst">
+          <End Role="DriverMst" Type="Self.DriverMst" Multiplicity="0..1" />
+          <End Role="ApplicationMst" Type="Self.ApplicationMst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DriverMst">
+              <PropertyRef Name="Driver_id" />
+            </Principal>
+            <Dependent Role="ApplicationMst">
+              <PropertyRef Name="Driver_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApplicationMst_UserMst">
+          <End Role="UserMst" Type="Self.UserMst" Multiplicity="0..1" />
+          <End Role="ApplicationMst" Type="Self.ApplicationMst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMst">
+              <PropertyRef Name="Userid" />
+            </Principal>
+            <Dependent Role="ApplicationMst">
+              <PropertyRef Name="Userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LicenseMst_ApplicationMst">
+          <End Role="ApplicationMst" Type="Self.ApplicationMst" Multiplicity="0..1" />
+          <End Role="LicenseMst" Type="Self.LicenseMst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationMst">
+              <PropertyRef Name="ApplicationId" />
+            </Principal>
+            <Dependent Role="LicenseMst">
+              <PropertyRef Name="ApplicationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DriverMst_DriverMst">
+          <End Role="DriverMst" Type="Self.DriverMst" Multiplicity="1" />
+          <End Role="DriverMst1" Type="Self.DriverMst" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="DriverMst">
+              <PropertyRef Name="Driver_id" />
+            </Principal>
+            <Dependent Role="DriverMst1">
+              <PropertyRef Name="Driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DriverMst_UserMst">
+          <End Role="UserMst" Type="Self.UserMst" Multiplicity="0..1" />
+          <End Role="DriverMst" Type="Self.DriverMst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMst">
+              <PropertyRef Name="Userid" />
+            </Principal>
+            <Dependent Role="DriverMst">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LicenseMst_DriverMst1">
+          <End Role="DriverMst" Type="Self.DriverMst" Multiplicity="0..1" />
+          <End Role="LicenseMst" Type="Self.LicenseMst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DriverMst">
+              <PropertyRef Name="Driver_id" />
+            </Principal>
+            <Dependent Role="LicenseMst">
+              <PropertyRef Name="Driver_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectLicenseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ApplicationMsts" EntityType="Self.ApplicationMst" />
+          <EntitySet Name="DriverMsts" EntityType="Self.DriverMst" />
+          <EntitySet Name="LicenseMsts" EntityType="Self.LicenseMst" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="UserMsts" EntityType="Self.UserMst" />
+          <AssociationSet Name="FK_ApplicationMst_DriverMst" Association="Self.FK_ApplicationMst_DriverMst">
+            <End Role="DriverMst" EntitySet="DriverMsts" />
+            <End Role="ApplicationMst" EntitySet="ApplicationMsts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApplicationMst_UserMst" Association="Self.FK_ApplicationMst_UserMst">
+            <End Role="UserMst" EntitySet="UserMsts" />
+            <End Role="ApplicationMst" EntitySet="ApplicationMsts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LicenseMst_ApplicationMst" Association="Self.FK_LicenseMst_ApplicationMst">
+            <End Role="ApplicationMst" EntitySet="ApplicationMsts" />
+            <End Role="LicenseMst" EntitySet="LicenseMsts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DriverMst_DriverMst" Association="Self.FK_DriverMst_DriverMst">
+            <End Role="DriverMst" EntitySet="DriverMsts" />
+            <End Role="DriverMst1" EntitySet="DriverMsts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DriverMst_UserMst" Association="Self.FK_DriverMst_UserMst">
+            <End Role="UserMst" EntitySet="UserMsts" />
+            <End Role="DriverMst" EntitySet="DriverMsts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LicenseMst_DriverMst1" Association="Self.FK_LicenseMst_DriverMst1">
+            <End Role="DriverMst" EntitySet="DriverMsts" />
+            <End Role="LicenseMst" EntitySet="LicenseMsts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjectLicenseModelStoreContainer" CdmEntityContainer="ProjectLicenseEntities">
+          <EntitySetMapping Name="ApplicationMsts">
+            <EntityTypeMapping TypeName="ProjectLicenseModel.ApplicationMst">
+              <MappingFragment StoreEntitySet="ApplicationMst">
+                <ScalarProperty Name="IsRenew" ColumnName="IsRenew" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="LicenseNumber" ColumnName="LicenseNumber" />
+                <ScalarProperty Name="Driver_Id" ColumnName="Driver_Id" />
+                <ScalarProperty Name="Creation_date" ColumnName="Creation_date" />
+                <ScalarProperty Name="Expiry_date" ColumnName="Expiry_date" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Userid" ColumnName="Userid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DriverMsts">
+            <EntityTypeMapping TypeName="ProjectLicenseModel.DriverMst">
+              <MappingFragment StoreEntitySet="DriverMst">
+                <ScalarProperty Name="Document_image" ColumnName="Document_image" />
+                <ScalarProperty Name="Document" ColumnName="Document" />
+                <ScalarProperty Name="Driver_id" ColumnName="Driver_id" />
+                <ScalarProperty Name="FName" ColumnName="FName" />
+                <ScalarProperty Name="MName" ColumnName="MName" />
+                <ScalarProperty Name="LName" ColumnName="LName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Phone_no" ColumnName="Phone_no" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="LicenseType" ColumnName="LicenseType" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LicenseMsts">
+            <EntityTypeMapping TypeName="ProjectLicenseModel.LicenseMst">
+              <MappingFragment StoreEntitySet="LicenseMst">
+                <ScalarProperty Name="License_id" ColumnName="License_id" />
+                <ScalarProperty Name="License_number" ColumnName="License_number" />
+                <ScalarProperty Name="Driver_Id" ColumnName="Driver_Id" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+                <ScalarProperty Name="Expiry_date" ColumnName="Expiry_date" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ProjectLicenseModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserMsts">
+            <EntityTypeMapping TypeName="ProjectLicenseModel.UserMst">
+              <MappingFragment StoreEntitySet="UserMst">
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone_no" ColumnName="Phone_no" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Userid" ColumnName="Userid" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

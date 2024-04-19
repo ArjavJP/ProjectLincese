@@ -1,0 +1,13 @@
+D:\Humber\.Net\ProjectLiceneceshravan\DAL\bin\Debug\DAL.dll
+D:\Humber\.Net\ProjectLiceneceshravan\DAL\bin\Debug\DAL.pdb
+D:\Humber\.Net\ProjectLiceneceshravan\DAL\obj\Debug\DAL.csproj.AssemblyReference.cache
+D:\Humber\.Net\ProjectLiceneceshravan\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+D:\Humber\.Net\ProjectLiceneceshravan\DAL\obj\Debug\DAL.dll
+D:\Humber\.Net\ProjectLiceneceshravan\DAL\obj\Debug\DAL.pdb
+D:\Humber\.Net\ProjectLiceneceshravan\DAL\bin\Debug\DAL.dll.config
+D:\Humber\.Net\ProjectLiceneceshravan\DAL\bin\Debug\BussinessEntityLayer.dll
+D:\Humber\.Net\ProjectLiceneceshravan\DAL\bin\Debug\EntityFramework.dll
+D:\Humber\.Net\ProjectLiceneceshravan\DAL\bin\Debug\BussinessEntityLayer.pdb
+D:\Humber\.Net\ProjectLiceneceshravan\DAL\bin\Debug\BussinessEntityLayer.dll.config
+D:\Humber\.Net\ProjectLiceneceshravan\DAL\bin\Debug\EntityFramework.xml
+D:\Humber\.Net\ProjectLiceneceshravan\DAL\obj\Debug\DAL.csproj.CopyComplete
